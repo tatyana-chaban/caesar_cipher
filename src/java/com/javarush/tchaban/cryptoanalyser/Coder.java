@@ -9,6 +9,7 @@ public class Coder {
     private final String filePathToEncrypt;
     private final String filePathToDecrypt;
     private final int key;
+    private final FileProcessor fileProcessor = new FileProcessor();
 
     public Coder(String filePathToEncrypt, int key, String filePathToDecrypt) {
         this.filePathToEncrypt = filePathToEncrypt;
@@ -17,31 +18,27 @@ public class Coder {
     }
 
     public void encoding() throws IOException {
-        try (BufferedReader bufferCharFromFile = new BufferedReader(new FileReader(filePathToEncrypt));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePathToDecrypt))) {
-            while (bufferCharFromFile.ready()) {
-                char oneChar = (char) bufferCharFromFile.read();
-                if (ALPHABET.contains(oneChar)) {
-                    int position = ALPHABET.indexOf(oneChar);
-                    int positionAfterCrypt = position + key;
-                    if (positionAfterCrypt >= ALPHABET.size()) {
-                        positionAfterCrypt = positionAfterCrypt % ALPHABET.size();
-                    }
-                    bufferedWriter.write(ALPHABET.get(positionAfterCrypt));
-                } else {
-                    bufferedWriter.write(oneChar);
+        char[] text = fileProcessor.readFile(filePathToEncrypt);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char symbol : text) {
+            if (ALPHABET.contains(symbol)) {
+                int position = ALPHABET.indexOf(symbol);
+                int positionAfterCrypt = position + key;
+                if (positionAfterCrypt >= ALPHABET.size()) {
+                    positionAfterCrypt = positionAfterCrypt % ALPHABET.size();
                 }
-
-
+                stringBuilder.append(ALPHABET.get(positionAfterCrypt));
+            } else {
+                stringBuilder.append(symbol);
             }
         }
-
-    }
-
-
+        fileProcessor.writeToFile(stringBuilder.toString().toCharArray(), filePathToDecrypt);
 
 
     }
+}
+
+
 
 
 
