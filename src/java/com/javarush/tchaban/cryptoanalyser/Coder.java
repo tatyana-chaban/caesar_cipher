@@ -1,23 +1,19 @@
 package com.javarush.tchaban.cryptoanalyser;
 
 import java.io.*;
-
-
 import static com.javarush.tchaban.cryptoanalyser.Alphabet.ALPHABET;
 
 public class Coder {
     private final String filePathToEncrypt;
     private final String filePathToDecrypt;
-    private final int key;
     private final FileProcessor fileProcessor = new FileProcessor();
 
     public Coder(String filePathToEncrypt, int key, String filePathToDecrypt) {
         this.filePathToEncrypt = filePathToEncrypt;
-        this.key = key;
         this.filePathToDecrypt = filePathToDecrypt;
     }
 
-    public void encoding() throws IOException {
+    public void encoding(int key) throws IOException {
         char[] text = fileProcessor.readFile(filePathToEncrypt);
         StringBuilder stringBuilder = new StringBuilder();
         for (char symbol : text) {

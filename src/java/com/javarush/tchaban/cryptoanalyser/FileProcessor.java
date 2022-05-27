@@ -16,7 +16,7 @@ public class FileProcessor {
                 }
             }
         } else {
-            throw new FileProcessorException();
+            throw new FileProcessingException();
         }
         return stringBuilder.toString().toCharArray();
     }

@@ -7,16 +7,14 @@ import static com.javarush.tchaban.cryptoanalyser.Alphabet.ALPHABET;
 public class Decoder {
     private final String filePathToEncrypt;
     private final String filePathToDecrypt;
-    private final int key;
     private final FileProcessor fileProcessor = new FileProcessor();
 
-    public Decoder(String filePathToEncrypt, int key, String filePathToDecrypt) {
+    public Decoder(String filePathToEncrypt, String filePathToDecrypt) {
         this.filePathToEncrypt = filePathToEncrypt;
-        this.key = key;
         this.filePathToDecrypt = filePathToDecrypt;
     }
 
-    public void decodingWithKey() throws IOException {
+    public void decodingWithKey(int key) throws IOException {
         char[] text = fileProcessor.readFile(filePathToEncrypt);
         StringBuilder stringBuilder = new StringBuilder();
         for (char symbol : text) {
