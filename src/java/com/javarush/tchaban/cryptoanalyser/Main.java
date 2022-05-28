@@ -14,62 +14,65 @@ public class Main {
             String choice = scanner.nextLine();
 
             if ("1".equals(choice)) {
-                System.out.println("Введите путь к файлу для шифрования: ");
-                String fileForCrypt = scanner.nextLine();
-
-                System.out.println("Введите путь к файлу для сохранения зашифрованного текста: ");
-                String fileForSaving = scanner.nextLine();
-
-                System.out.println("Введите ключ для шифрования: ");
-                int key = scanner.nextInt();
-
                 try {
+                    System.out.println("Введите путь к файлу для шифрования: ");
+                    String fileForCrypt = scanner.nextLine();
+
+                    System.out.println("Введите путь к файлу для сохранения зашифрованного текста: ");
+                    String fileForSaving = scanner.nextLine();
+
+                    System.out.println("Введите ключ для шифрования: ");
+                    int key = Validator.returnValidKey(scanner.nextLine());
+
                     FileProcessor fileProcessor = new FileProcessor();
                     List<String> textForCrypt = fileProcessor.readFile(fileForCrypt);
                     List<String> textAfterCrypt = Coder.encoding(textForCrypt, key);
                     fileProcessor.writeToFile(textAfterCrypt, fileForSaving);
-                } catch (Exception ex) {
 
+                } catch (IllegalArgumentException | FileProcessingException ex) {
+                    System.out.println(ex.getMessage());
                 }
-                //отлавливание ошибок файлпроцессор  и иллегал
 
 
                 break;
 
             } else if ("2".equals(choice)) {
-                System.out.println("Введите путь к файлу для расшифровки: ");
-                String fileForDecrypt = scanner.nextLine();
-                System.out.println("Введите путь к файлу для сохранения расшифрованного текста: ");
-                String fileForSaving = scanner.nextLine();
-                System.out.println("Введите ключ для расшифровки: ");
-                int key = scanner.nextInt();
-
                 try {
+                    System.out.println("Введите путь к файлу для расшифровки: ");
+                    String fileForDecrypt = scanner.nextLine();
+
+                    System.out.println("Введите путь к файлу для сохранения расшифрованного текста: ");
+                    String fileForSaving = scanner.nextLine();
+
+                    System.out.println("Введите ключ для расшифровки: ");
+                    int key = Validator.returnValidKey(scanner.nextLine());
+
                     FileProcessor fileProcessor = new FileProcessor();
                     List<String> textForDecrypt = fileProcessor.readFile(fileForDecrypt);
                     List<String> textAfterDecrypt = Decoder.decodingWithKey(textForDecrypt, key);
                     fileProcessor.writeToFile(textAfterDecrypt, fileForSaving);
-                } catch (Exception ex) {
 
+                } catch (IllegalArgumentException | FileProcessingException ex) {
+                    System.out.println(ex.getMessage());
                 }
-                //отлавливание ошибок валидации и файлпроцессор
                 break;
 
             } else if ("3".equals(choice)) {
-                System.out.println("Введите путь к файлу для расшифровки: ");
-                String fileForDecrypt = scanner.nextLine();
-                System.out.println("Введите путь к файлу для сохранения расшифрованного текста: ");
-                String fileForSaving = scanner.nextLine();
-
                 try {
+                    System.out.println("Введите путь к файлу для расшифровки: ");
+                    String fileForDecrypt = scanner.nextLine();
+
+                    System.out.println("Введите путь к файлу для сохранения расшифрованного текста: ");
+                    String fileForSaving = scanner.nextLine();
+
                     FileProcessor fileProcessor = new FileProcessor();
                     List<String> textForDecrypt = fileProcessor.readFile(fileForDecrypt);
                     List<String> textAfterDecrypt = Decoder.brutForceDecoding(textForDecrypt);
                     fileProcessor.writeToFile(textAfterDecrypt, fileForSaving);
-                } catch (Exception ex) {
 
+                } catch (IllegalArgumentException | FileProcessingException ex) {
+                    System.out.println(ex.getMessage());
                 }
-                //отлавливание ошибок валидации и файлпроцессор
                 break;
 
             } else if ("4".equals(choice)) {
@@ -94,7 +97,7 @@ public class Main {
 
     }
 
-    public static void printStartInfo(){
+    public static void printStartInfo() {
         System.out.println("""
                 Выбор режима работы. Введите:\s
                 1 - для шифрования текста;

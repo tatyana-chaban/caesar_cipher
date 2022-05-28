@@ -6,6 +6,7 @@ import java.util.List;
 import static com.javarush.tchaban.cryptoanalyser.Alphabet.ALPHABET;
 
 public class Coder {
+
     public static List<String> encoding(List<String> listForCrypt, int key) {
         List<String> encryptList = new ArrayList<>();
         StringBuilder buffer = new StringBuilder();
@@ -21,6 +22,7 @@ public class Coder {
                 }
             }
             encryptList.add(buffer.toString());
+            buffer = new StringBuilder();
         }
         return encryptList;
     }

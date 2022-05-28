@@ -12,14 +12,19 @@ public class Decoder {
         StringBuilder buffer = new StringBuilder();
         for (String line : text) {
             for (char symbol : line.toCharArray()) {
-                int position = ALPHABET.indexOf(symbol);
-                int positionAfterDecrypt = position - key;
-                if (positionAfterDecrypt < 0) {
-                    positionAfterDecrypt = ALPHABET.size() + positionAfterDecrypt;
+                if (ALPHABET.contains(symbol)) {
+                    int position = ALPHABET.indexOf(symbol);
+                    int positionAfterDecrypt = position - key;
+                    if (positionAfterDecrypt < 0) {
+                        positionAfterDecrypt = ALPHABET.size() + positionAfterDecrypt;
+                    }
+                    buffer.append(ALPHABET.get(positionAfterDecrypt));
+                } else {
+                    throw new IllegalArgumentException("Расшифровка не удалась. Текст содержит некорректные символы ");
                 }
-                buffer.append(ALPHABET.get(positionAfterDecrypt));
+                decryptList.add(buffer.toString());
+                buffer = new StringBuilder();
             }
-            decryptList.add(buffer.toString());
         }
         return decryptList;
 
