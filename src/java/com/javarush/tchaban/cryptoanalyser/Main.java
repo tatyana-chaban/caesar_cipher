@@ -24,10 +24,10 @@ public class Main {
                 int key = scanner.nextInt();
 
                 try {
-                    FileProcessor fileProcessor = new FileProcessor(fileForCrypt, fileForSaving);
-                    List<String> textForCrypt = fileProcessor.readFile();
+                    FileProcessor fileProcessor = new FileProcessor();
+                    List<String> textForCrypt = fileProcessor.readFile(fileForCrypt);
                     List<String> textAfterCrypt = Coder.encoding(textForCrypt, key);
-                    fileProcessor.writeToFile(textAfterCrypt);
+                    fileProcessor.writeToFile(textAfterCrypt, fileForSaving);
                 } catch (Exception ex) {
 
                 }
@@ -45,10 +45,10 @@ public class Main {
                 int key = scanner.nextInt();
 
                 try {
-                    FileProcessor fileProcessor = new FileProcessor(fileForDecrypt, fileForSaving);
-                    List<String> textForDecrypt = fileProcessor.readFile();
+                    FileProcessor fileProcessor = new FileProcessor();
+                    List<String> textForDecrypt = fileProcessor.readFile(fileForDecrypt);
                     List<String> textAfterDecrypt = Decoder.decodingWithKey(textForDecrypt, key);
-                    fileProcessor.writeToFile(textAfterDecrypt);
+                    fileProcessor.writeToFile(textAfterDecrypt, fileForSaving);
                 } catch (Exception ex) {
 
                 }
@@ -62,10 +62,10 @@ public class Main {
                 String fileForSaving = scanner.nextLine();
 
                 try {
-                    FileProcessor fileProcessor = new FileProcessor(fileForDecrypt, fileForSaving);
-                    List<String> textForDecrypt = fileProcessor.readFile();
+                    FileProcessor fileProcessor = new FileProcessor();
+                    List<String> textForDecrypt = fileProcessor.readFile(fileForDecrypt);
                     List<String> textAfterDecrypt = Decoder.brutForceDecoding(textForDecrypt);
-                    fileProcessor.writeToFile(textAfterDecrypt);
+                    fileProcessor.writeToFile(textAfterDecrypt, fileForSaving);
                 } catch (Exception ex) {
 
                 }

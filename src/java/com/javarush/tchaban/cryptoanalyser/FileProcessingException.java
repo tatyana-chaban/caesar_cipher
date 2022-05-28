@@ -1,14 +1,14 @@
 package com.javarush.tchaban.cryptoanalyser;
 
-public class FileProcessingException extends RuntimeException{
-    String massage;
-
-    public FileProcessingException(String massage){
-        this.massage = massage;
-
+public class FileProcessingException extends RuntimeException {
+    public FileProcessingException() {
     }
 
-    public String getMassage(){
-        return massage;
+    public FileProcessingException(String message) {
+        super(message);
+    }
+
+    public FileProcessingException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
