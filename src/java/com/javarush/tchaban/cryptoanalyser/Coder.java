@@ -1,36 +1,29 @@
 package com.javarush.tchaban.cryptoanalyser;
 
-import java.io.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.javarush.tchaban.cryptoanalyser.Alphabet.ALPHABET;
 
 public class Coder {
-    private final String filePathToEncrypt;
-    private final String filePathToDecrypt;
-    private final FileProcessor fileProcessor = new FileProcessor();
-
-    public Coder(String filePathToEncrypt, int key, String filePathToDecrypt) {
-        this.filePathToEncrypt = filePathToEncrypt;
-        this.filePathToDecrypt = filePathToDecrypt;
-    }
-
-    public void encoding(int key) throws IOException {
-        char[] text = fileProcessor.readFile(filePathToEncrypt);
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char symbol : text) {
-            if (ALPHABET.contains(symbol)) {
-                int position = ALPHABET.indexOf(symbol);
-                int positionAfterCrypt = position + key;
-                if (positionAfterCrypt >= ALPHABET.size()) {
-                    positionAfterCrypt = positionAfterCrypt % ALPHABET.size();
+    public static List<String> encoding(List<String> listForCrypt, int key) {
+        List<String> encryptList = new ArrayList<>();
+        StringBuilder buffer = new StringBuilder();
+        for (String line : listForCrypt) {
+            for (char symbol : line.toCharArray()) {
+                if (ALPHABET.contains(symbol)) {
+                    int position = ALPHABET.indexOf(symbol);
+                    int positionAfterCrypt = position + key;
+                    if (positionAfterCrypt >= ALPHABET.size()) {
+                        positionAfterCrypt = positionAfterCrypt % ALPHABET.size();
+                    }
+                    buffer.append(ALPHABET.get(positionAfterCrypt));
                 }
-                stringBuilder.append(ALPHABET.get(positionAfterCrypt));
-            } else {
-                stringBuilder.append(symbol);
             }
+            encryptList.add(buffer.toString());
         }
-        fileProcessor.writeToFile(stringBuilder.toString().toCharArray(), filePathToDecrypt);
-
-
+        return encryptList;
     }
 }
 

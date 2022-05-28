@@ -1,41 +1,37 @@
 package com.javarush.tchaban.cryptoanalyser;
 
-import java.io.*;
+
+import java.util.List;
 import java.util.Scanner;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-
-        System.out.println("""
-                Выбор режима работы. Введите:\s
-                1 - для шифрования текста;
-                2 - для расшифровки текса по известному ключу;
-                3 - для расшифровки методом BrutForce;
-                4 - для расшифровки методом статистического анализа;
-                exit - для выхода из программы.
-                """);
-
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         while (true) {
+            printStartInfo();
             String choice = scanner.nextLine();
 
             if ("1".equals(choice)) {
                 System.out.println("Введите путь к файлу для шифрования: ");
                 String fileForCrypt = scanner.nextLine();
+
                 System.out.println("Введите путь к файлу для сохранения зашифрованного текста: ");
                 String fileForSaving = scanner.nextLine();
+
                 System.out.println("Введите ключ для шифрования: ");
                 int key = scanner.nextInt();
 
                 try {
-                    // проверка на валидность
-                    Coder coder = new Coder(fileForCrypt, key, fileForSaving);
-                    coder.encoding(key);
-                } catch (Exception ex){
+                    FileProcessor fileProcessor = new FileProcessor(fileForCrypt, fileForSaving);
+                    List<String> textForCrypt = fileProcessor.readFile();
+                    List<String> textAfterCrypt = Coder.encoding(textForCrypt, key);
+                    fileProcessor.writeToFile(textAfterCrypt);
+                } catch (Exception ex) {
 
                 }
-                    //отлавливание ошибок валидации и файлпроцессор
+                //отлавливание ошибок файлпроцессор  и иллегал
 
 
                 break;
@@ -49,10 +45,11 @@ public class Main {
                 int key = scanner.nextInt();
 
                 try {
-                    // проверка на валидность
-                    Decoder decoder = new Decoder(fileForDecrypt, fileForSaving);
-                    decoder.decodingWithKey(key);
-                } catch (Exception ex){
+                    FileProcessor fileProcessor = new FileProcessor(fileForDecrypt, fileForSaving);
+                    List<String> textForDecrypt = fileProcessor.readFile();
+                    List<String> textAfterDecrypt = Decoder.decodingWithKey(textForDecrypt, key);
+                    fileProcessor.writeToFile(textAfterDecrypt);
+                } catch (Exception ex) {
 
                 }
                 //отлавливание ошибок валидации и файлпроцессор
@@ -65,10 +62,11 @@ public class Main {
                 String fileForSaving = scanner.nextLine();
 
                 try {
-                    // проверка на валидность
-                    Decoder decoder = new Decoder(fileForDecrypt, fileForSaving);
-                    decoder.brutForceDecoding();
-                } catch (Exception ex){
+                    FileProcessor fileProcessor = new FileProcessor(fileForDecrypt, fileForSaving);
+                    List<String> textForDecrypt = fileProcessor.readFile();
+                    List<String> textAfterDecrypt = Decoder.brutForceDecoding(textForDecrypt);
+                    fileProcessor.writeToFile(textAfterDecrypt);
+                } catch (Exception ex) {
 
                 }
                 //отлавливание ошибок валидации и файлпроцессор
@@ -94,12 +92,17 @@ public class Main {
         }
 
 
-        String pathToFileForCrypt = "C:\\Users\\Nimfadora\\IdeaProjects\\caesar_cipher\\src\\forCrypt.txt";
-        String pathToDecryptFile = "C:\\Users\\Nimfadora\\IdeaProjects\\caesar_cipher\\Crypt.txt";
-        String pathAfterDecrypt = "C:\\Users\\Nimfadora\\IdeaProjects\\caesar_cipher\\DeCrypt.txt";
-        int key = 4;
+    }
 
-
+    public static void printStartInfo(){
+        System.out.println("""
+                Выбор режима работы. Введите:\s
+                1 - для шифрования текста;
+                2 - для расшифровки текса по известному ключу;
+                3 - для расшифровки методом BrutForce;
+                4 - для расшифровки методом статистического анализа;
+                exit - для выхода из программы.
+                """);
     }
 
 
