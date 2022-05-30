@@ -2,7 +2,6 @@ package com.javarush.tchaban.cryptoanalyser;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.javarush.tchaban.cryptoanalyser.Alphabet.ALPHABET;
 
 public class Coder {
@@ -16,7 +15,7 @@ public class Coder {
                     int position = ALPHABET.indexOf(symbol);
                     int positionAfterCrypt = position + key;
                     if (positionAfterCrypt >= ALPHABET.size()) {
-                        positionAfterCrypt = positionAfterCrypt % ALPHABET.size();
+                        positionAfterCrypt %=  ALPHABET.size();
                     }
                     buffer.append(ALPHABET.get(positionAfterCrypt));
                 }

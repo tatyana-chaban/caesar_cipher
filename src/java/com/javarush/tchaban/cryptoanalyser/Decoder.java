@@ -2,7 +2,6 @@ package com.javarush.tchaban.cryptoanalyser;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.javarush.tchaban.cryptoanalyser.Alphabet.ALPHABET;
 
 public class Decoder {
@@ -22,9 +21,10 @@ public class Decoder {
                 } else {
                     throw new IllegalArgumentException("Расшифровка не удалась. Текст содержит некорректные символы ");
                 }
-                decryptList.add(buffer.toString());
-                buffer = new StringBuilder();
             }
+            decryptList.add(buffer.toString());
+            buffer = new StringBuilder();
+
         }
         return decryptList;
 
