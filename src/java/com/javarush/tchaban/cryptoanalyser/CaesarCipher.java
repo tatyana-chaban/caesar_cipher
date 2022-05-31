@@ -41,7 +41,8 @@ public class CaesarCipher {
                     int positionAfterProcessing = position + key;
                     if (positionAfterProcessing >= ALPHABET.size()) {
                         positionAfterProcessing %= ALPHABET.size();
-                    }if (positionAfterProcessing < 0) {
+                    }
+                    if (positionAfterProcessing < 0) {
                         positionAfterProcessing += ALPHABET.size();
                     }
                     buffer.append(ALPHABET.get(positionAfterProcessing));

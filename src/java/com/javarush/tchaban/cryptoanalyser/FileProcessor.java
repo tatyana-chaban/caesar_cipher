@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-
 public class FileProcessor {
 
     public List<String> readFile(String fileForReading) {
