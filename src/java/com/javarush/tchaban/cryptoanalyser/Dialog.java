@@ -4,28 +4,34 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Dialog {
+    private static final String ENTER_FILE_FOR_ENCRYPT = "Enter the path to the file to encrypt: ";
+    private static final String ENTER_FILE_FOR_DECRYPT = "Enter the path to the file to decrypt: ";
+    private static final String ENTER_FILE_FOR_SAVING = "Enter the path to the file to save the result: ";
+    private static final String ENTER_KEY = "Enter key: ";
+    private static final String SUCCESS = "The operation was successful!";
 
-    public void start(){
+    public void start() {
         Scanner scanner = new Scanner(System.in);
+        FileProcessor fileProcessor = new FileProcessor();
+        CaesarCipher caesarCipher = new CaesarCipher();
         while (true) {
             printStartInfo();
             String choice = scanner.nextLine();
             if ("1".equals(choice)) {
                 try {
-                    System.out.println("Введите путь к файлу для шифрования: ");
-                    String fileForCrypt = scanner.nextLine();
+                    System.out.println(ENTER_FILE_FOR_ENCRYPT);
+                    String fileForEncrypt = scanner.nextLine();
 
-                    System.out.println("Введите путь к файлу для сохранения зашифрованного текста: ");
+                    System.out.println(ENTER_FILE_FOR_SAVING);
                     String fileForSaving = scanner.nextLine();
 
-                    System.out.println("Введите ключ для шифрования: ");
+                    System.out.println(ENTER_KEY);
                     int key = Validator.returnValidKey(scanner.nextLine());
 
-                    FileProcessor fileProcessor = new FileProcessor();
-                    List<String> textForCrypt = fileProcessor.readFile(fileForCrypt);
-                    List<String> textAfterCrypt = Coder.encoding(textForCrypt, key);
+                    List<String> textForCrypt = fileProcessor.readFile(fileForEncrypt);
+                    List<String> textAfterCrypt = caesarCipher.encoding(textForCrypt, key);
                     fileProcessor.writeToFile(textAfterCrypt, fileForSaving);
-                    System.out.println("\nШифрование прошло успешно!");
+                    System.out.println(SUCCESS);
 
                 } catch (IllegalArgumentException | FileProcessingException ex) {
                     System.out.println(ex.getMessage());
@@ -34,20 +40,19 @@ public class Dialog {
 
             } else if ("2".equals(choice)) {
                 try {
-                    System.out.println("Введите путь к файлу для расшифровки: ");
+                    System.out.println(ENTER_FILE_FOR_DECRYPT);
                     String fileForDecrypt = scanner.nextLine();
 
-                    System.out.println("Введите путь к файлу для сохранения расшифрованного текста: ");
+                    System.out.println(ENTER_FILE_FOR_SAVING);
                     String fileForSaving = scanner.nextLine();
 
-                    System.out.println("Введите ключ для расшифровки: ");
+                    System.out.println(ENTER_KEY);
                     int key = Validator.returnValidKey(scanner.nextLine());
 
-                    FileProcessor fileProcessor = new FileProcessor();
                     List<String> textForDecrypt = fileProcessor.readFile(fileForDecrypt);
-                    List<String> textAfterDecrypt = Decoder.decodingWithKey(textForDecrypt, key);
+                    List<String> textAfterDecrypt = caesarCipher.decodingWithKey(textForDecrypt, key);
                     fileProcessor.writeToFile(textAfterDecrypt, fileForSaving);
-                    System.out.println("\nРасшифровка с использование ключа " + key + " прошла успешна!");
+                    System.out.println(SUCCESS);
 
                 } catch (IllegalArgumentException | FileProcessingException ex) {
                     System.out.println(ex.getMessage());
@@ -56,17 +61,16 @@ public class Dialog {
 
             } else if ("3".equals(choice)) {
                 try {
-                    System.out.println("Введите путь к файлу для расшифровки: ");
+                    System.out.println(ENTER_FILE_FOR_DECRYPT);
                     String fileForDecrypt = scanner.nextLine();
 
-                    System.out.println("Введите путь к файлу для сохранения расшифрованного текста: ");
+                    System.out.println(ENTER_FILE_FOR_SAVING);
                     String fileForSaving = scanner.nextLine();
 
-                    FileProcessor fileProcessor = new FileProcessor();
                     List<String> textForDecrypt = fileProcessor.readFile(fileForDecrypt);
-                    List<String> textAfterDecrypt = Decoder.brutForceDecoding(textForDecrypt);
+                    List<String> textAfterDecrypt = caesarCipher.bruteForceDecoding(textForDecrypt);
                     fileProcessor.writeToFile(textAfterDecrypt, fileForSaving);
-                    System.out.println("\nРасшифровка методом BrutForce прошла успешна!");
+                    System.out.println(SUCCESS);
 
                 } catch (IllegalArgumentException | FileProcessingException ex) {
                     System.out.println(ex.getMessage());
@@ -77,20 +81,18 @@ public class Dialog {
                 break;
 
             } else {
-                System.out.println("Некорректные данные. Повторите попытку.");
+                System.out.println("Invalid data. Try again");
             }
-
-
         }
     }
 
     public static void printStartInfo() {
         System.out.println("""
-                Выбор режима работы. Введите:\s
-                1 - для шифрования текста;
-                2 - для расшифровки текса по известному ключу;
-                3 - для расшифровки методом BrutForce;
-                exit - для выхода из программы.
+                Selecting the operating mode. Enter:
+                 1 - for text encryption;
+                 2 - to decrypt the text using a known key;
+                 3 - for decryption using the BruteForce method;
+                 exit - to exit the program.
                 """);
     }
 }

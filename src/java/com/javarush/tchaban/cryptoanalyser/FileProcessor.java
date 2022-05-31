@@ -14,20 +14,17 @@ public class FileProcessor {
             Path path = Validator.returnValidPath(fileForReading);
             listAfterReading = Files.readAllLines(path);
         } catch (IOException ex) {
-            throw new FileProcessingException("Ошибка чтения файла " + fileForReading, ex);
+            throw new FileProcessingException("Error reading file " + fileForReading, ex);
         }
         return listAfterReading;
 }
-
 
     public void writeToFile(List<String> stringList, String fileForWriting) {
             try {
                 Path path = Validator.returnValidPath(fileForWriting);
                 Files.write(path, stringList);
             } catch (IOException ex) {
-                throw new FileProcessingException("Ошибка записи файла " + fileForWriting, ex);
+                throw new FileProcessingException("Error writing file " + fileForWriting, ex);
             }
-
     }
-
 }
