@@ -1,7 +1,6 @@
 package com.javarush.tchaban.cryptoanalyser;
 
 public class FileProcessingException extends RuntimeException {
-
     String message;
 
     public FileProcessingException() {

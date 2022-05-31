@@ -86,7 +86,7 @@ public class Dialog {
         }
     }
 
-    public static void printStartInfo() {
+    private void printStartInfo() {
         System.out.println("""
                 Selecting the operating mode. Enter:
                  1 - for text encryption;
