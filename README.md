@@ -38,7 +38,7 @@
 ![3финиш](https://user-images.githubusercontent.com/105919648/170995372-c8086031-8cee-4c95-a494-c0fe91e93e94.PNG)
 
 
-Точка входа в приложение:
+Точка входа в приложение
 ---------
 *com.javarush.tchaban.cryptoanalyser.Main#main*
 
