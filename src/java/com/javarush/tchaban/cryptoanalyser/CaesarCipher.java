@@ -54,4 +54,3 @@ public class CaesarCipher {
         return processingList;
     }
 }
-
